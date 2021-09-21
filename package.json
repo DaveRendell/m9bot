@@ -1,0 +1,36 @@
+{
+  "name": "m9bot",
+  "version": "1.0.0",
+  "description": "Bot for the M9 Discord server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node src/main.ts",
+    "lint": "eslint src/ --ext .ts",
+    "build": "npm run lint && tsc",
+    "prestart": "npm run build",
+    "start": "node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveRendell/m9bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DaveRendell/m9bot/issues"
+  },
+  "homepage": "https://github.com/DaveRendell/m9bot#readme",
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "node-cron": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node-cron": "^2.0.4",
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
+    "eslint": "^7.32.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
