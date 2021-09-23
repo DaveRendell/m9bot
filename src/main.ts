@@ -1,4 +1,7 @@
 import * as nodeCron from "node-cron"
-import * as discordJs from "discord.js"
+import * as discord from "discord.js"
+const { token } = require("../discordToken.json")
 
-console.log("Hello, World")
+const discordClient = new discord.Client()
+
+discordClient.login(token)
