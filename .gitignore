@@ -107,3 +107,6 @@ dist
 
 # Don't check in the secure discord bot token
 discordToken.json
+
+# Don't check in the birthday list
+birthdays.json
