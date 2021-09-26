@@ -25,5 +25,6 @@ export async function getTodaysBirthdays(): Promise<Birthday[]> {
   const todaysDate = getShortDateString(new Date())
   const birthdays = await getBirthdays()
 
-  return birthdays.filter(({birthday}) => birthday === todaysDate)
+  return birthdays.filter(({birthday}) => 
+    birthday.slice(4) === todaysDate.slice(4))
 }

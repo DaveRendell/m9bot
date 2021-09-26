@@ -65,6 +65,21 @@ describe("birthdayService", () => {
         "user3", "user4"
       ])
     })
+    test("returns birthdays with date string matching current in previous years", async () => {
+      const currentDateString = new Date().toISOString().slice(4, 10)
+      setExistingBirthdays([
+        { userId: "user2", birthday: "1975-01-03" },
+        { userId: "user1", birthday: "1990-05-03" },
+        { userId: "user3", birthday: "1990" + currentDateString },
+        { userId: "user4", birthday: "1992" + currentDateString },
+      ])
+
+      const birthdays = await getTodaysBirthdays()
+
+      expect(birthdays.map(birthday => birthday.userId)).toEqual([
+        "user3", "user4"
+      ])
+    })
     test("does not return birthday with date string not matching current date", async () => {
       setExistingBirthdays([
         { userId: "user2", birthday: "1975-01-03" },
