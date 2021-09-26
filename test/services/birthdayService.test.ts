@@ -1,6 +1,7 @@
 import { addOrUpdateBirthday, getTodaysBirthdays } from "src/services/birthdayService"
 import * as repository from "src/repositories/birthdayRepository"
 import { mocked } from "ts-jest/utils"
+import Birthday from "src/models/birthday"
 
 jest.mock("src/repositories/birthdayRepository")
 

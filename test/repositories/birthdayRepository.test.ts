@@ -1,6 +1,7 @@
 import * as fs from "fs"
 import { BIRTHDAY_FILE } from "src/config"
 import { getBirthdays, setBirthdays } from "src/repositories/birthdayRepository"
+import Birthday from "src/models/birthday"
 
 jest.mock("src/config", () => ({
   BIRTHDAY_FILE: "birthdays.test.json"

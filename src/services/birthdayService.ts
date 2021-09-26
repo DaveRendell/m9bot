@@ -1,4 +1,5 @@
 import { getBirthdays, setBirthdays } from "src/repositories/birthdayRepository"
+import Birthday from "src/models/birthday"
 
 // Returns date string in YYYY-MM-DD format
 function getShortDateString(date: Date): string {

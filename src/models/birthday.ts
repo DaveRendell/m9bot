@@ -1,4 +1,4 @@
-interface Birthday {
+export default interface Birthday {
   userId: string
   birthday: string
 }
