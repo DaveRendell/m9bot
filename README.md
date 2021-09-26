@@ -23,3 +23,6 @@ Run `npm run dev` to launch in nodemon with hot reloading of code
 ### Running in production mode
 Run `npm start` to run the build, the linting, and then launch the bot in 
 production mode.
+
+## Running tests
+Run `npm test` to run the tests.

@@ -1,9 +1,9 @@
 import * as fs from "fs/promises"
-const BIRTHDAY_FILE = "birthdays.json"
+import { BIRTHDAY_FILE } from "src/config"
 
 const DEFAULT_STATE: Birthday[] = []
 
-export async function listBirthdays() {
+export async function getBirthdays(): Promise<Birthday[]> {
   // Create the file if it doesn't yet exist
   await fs.access(BIRTHDAY_FILE).catch(() => 
     fs.writeFile(BIRTHDAY_FILE, JSON.stringify(DEFAULT_STATE)))
@@ -12,17 +12,6 @@ export async function listBirthdays() {
   return JSON.parse(fileContents) as Birthday[]
 }
 
-export async function addOrUpdateBirthday(birthday: Birthday): Promise<void> {
-  const existingBirthdays = await listBirthdays()
-  const previousBirthdayIndex = existingBirthdays.findIndex(b => 
-    b.userId === birthday.userId)
-  
-  if (previousBirthdayIndex !== -1) {
-    // Remove existing user birthday prior to adding new entry
-    existingBirthdays.splice(previousBirthdayIndex, 1)
-  }
-
-  return fs.writeFile(
-    BIRTHDAY_FILE,
-    JSON.stringify([...existingBirthdays, birthday]))
+export async function setBirthdays(birthdays: Birthday[]): Promise<void> {
+  fs.writeFile(BIRTHDAY_FILE, JSON.stringify(birthdays))
 }

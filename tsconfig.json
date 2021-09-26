@@ -10,9 +10,14 @@
     "sourceMap": true,
     "target": "es5",
     "strict": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "baseUrl": ".",
+    "paths": {
+      "src": ["src/"]
+    }
   },
   "include":[
     "src/**/*",
+    "test/**/*"
   ]
 }

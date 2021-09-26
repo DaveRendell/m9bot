@@ -109,4 +109,4 @@ dist
 discordToken.json
 
 # Don't check in the birthday list
-birthdays.json
+birthdays*.json
