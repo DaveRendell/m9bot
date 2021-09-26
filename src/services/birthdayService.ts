@@ -1,0 +1,28 @@
+import { getBirthdays, setBirthdays } from "src/repositories/birthdayRepository"
+
+// Returns date string in YYYY-MM-DD format
+function getShortDateString(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+export async function addOrUpdateBirthday(
+  userId: string,
+  date: Date
+): Promise<void> {
+  const existingBirthdays = await getBirthdays()
+  const birthdayString = getShortDateString(date)
+
+  await setBirthdays([
+    ...existingBirthdays.filter(birthday => birthday.userId !== userId),
+    {
+      userId,
+      birthday: birthdayString
+    }])
+}
+
+export async function getTodaysBirthdays(): Promise<Birthday[]> {
+  const todaysDate = getShortDateString(new Date())
+  const birthdays = await getBirthdays()
+
+  return birthdays.filter(({birthday}) => birthday === todaysDate)
+}
