@@ -1,6 +1,9 @@
 import * as fs from "fs/promises"
 import { BIRTHDAY_FILE } from "src/config"
 import Birthday from "src/models/birthday"
+/**
+ * Contains methods for interacting with the JSON file containing user birthdays
+ */
 
 const DEFAULT_STATE: Birthday[] = []
 

@@ -1,10 +1,8 @@
 import { getBirthdays, setBirthdays } from "src/repositories/birthdayRepository"
 import Birthday from "src/models/birthday"
-
-// Returns date string in YYYY-MM-DD format
-function getShortDateString(date: Date): string {
-  return date.toISOString().slice(0, 10);
-}
+/**
+ * Contains functions containing business logic around user's birthdays
+ */
 
 export async function addOrUpdateBirthday(
   userId: string,
@@ -27,4 +25,9 @@ export async function getTodaysBirthdays(): Promise<Birthday[]> {
 
   return birthdays.filter(({birthday}) => 
     birthday.slice(4) === todaysDate.slice(4))
+}
+
+// Returns date string in YYYY-MM-DD format
+function getShortDateString(date: Date): string {
+  return date.toISOString().slice(0, 10);
 }
