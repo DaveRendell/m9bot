@@ -15,7 +15,7 @@ export async function addOrUpdateBirthday(
     ...existingBirthdays.filter(birthday => birthday.userId !== userId),
     {
       userId,
-      birthday: birthdayString
+      date: birthdayString
     }])
 }
 
@@ -23,8 +23,8 @@ export async function getTodaysBirthdays(): Promise<Birthday[]> {
   const todaysDate = getShortDateString(new Date())
   const birthdays = await getBirthdays()
 
-  return birthdays.filter(({birthday}) => 
-    birthday.slice(4) === todaysDate.slice(4))
+  return birthdays.filter(({date}) => 
+    date.slice(4) === todaysDate.slice(4))
 }
 
 // Returns date string in YYYY-MM-DD format

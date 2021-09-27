@@ -24,28 +24,28 @@ describe("birthdayService", () => {
 
       expect(repository.setBirthdays).toHaveBeenCalledWith([{
         userId: "user1",
-        birthday: "1990-05-03"
+        date: "1990-05-03"
       }])
     })
     test("replaces previous birthday if user has existing birthday", async () => {
-      setExistingBirthdays([{ userId: "user1", birthday: "1975-01-03" }])
+      setExistingBirthdays([{ userId: "user1", date: "1975-01-03" }])
 
       await addOrUpdateBirthday("user1", new Date(1990, 4, 4))
 
       expect(repository.setBirthdays).toHaveBeenCalledWith([
-        { userId: "user1", birthday: "1990-05-03" }])
+        { userId: "user1", date: "1990-05-03" }])
     })
     test("doesn't overwrite other users birthdays", async () => {
       setExistingBirthdays([
-        { userId: "user1", birthday: "1975-01-03" },
-        { userId: "user2", birthday: "1975-01-03" },
+        { userId: "user1", date: "1975-01-03" },
+        { userId: "user2", date: "1975-01-03" },
       ])
 
       await addOrUpdateBirthday("user1", new Date(1990, 4, 4))
 
       expect(repository.setBirthdays).toHaveBeenCalledWith([
-        { userId: "user2", birthday: "1975-01-03" },
-        { userId: "user1", birthday: "1990-05-03" },   
+        { userId: "user2", date: "1975-01-03" },
+        { userId: "user1", date: "1990-05-03" },   
       ])
     })
   }),
@@ -53,10 +53,10 @@ describe("birthdayService", () => {
     test("returns birthdays with date string matching current date", async () => {
       const currentDateString = new Date().toISOString().slice(0, 10)
       setExistingBirthdays([
-        { userId: "user2", birthday: "1975-01-03" },
-        { userId: "user1", birthday: "1990-05-03" },
-        { userId: "user3", birthday: currentDateString },
-        { userId: "user4", birthday: currentDateString },
+        { userId: "user2", date: "1975-01-03" },
+        { userId: "user1", date: "1990-05-03" },
+        { userId: "user3", date: currentDateString },
+        { userId: "user4", date: currentDateString },
       ])
 
       const birthdays = await getTodaysBirthdays()
@@ -68,10 +68,10 @@ describe("birthdayService", () => {
     test("returns birthdays with date string matching current in previous years", async () => {
       const currentDateString = new Date().toISOString().slice(4, 10)
       setExistingBirthdays([
-        { userId: "user2", birthday: "1975-01-03" },
-        { userId: "user1", birthday: "1990-05-03" },
-        { userId: "user3", birthday: "1990" + currentDateString },
-        { userId: "user4", birthday: "1992" + currentDateString },
+        { userId: "user2", date: "1975-01-03" },
+        { userId: "user1", date: "1990-05-03" },
+        { userId: "user3", date: "1990" + currentDateString },
+        { userId: "user4", date: "1992" + currentDateString },
       ])
 
       const birthdays = await getTodaysBirthdays()
@@ -82,8 +82,8 @@ describe("birthdayService", () => {
     })
     test("does not return birthday with date string not matching current date", async () => {
       setExistingBirthdays([
-        { userId: "user2", birthday: "1975-01-03" },
-        { userId: "user1", birthday: "1990-05-03" },
+        { userId: "user2", date: "1975-01-03" },
+        { userId: "user1", date: "1990-05-03" },
       ])
 
       const birthdays = await getTodaysBirthdays()

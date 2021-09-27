@@ -16,9 +16,9 @@ afterEach(() => {
 })
 
 const EXAMPLE_BIRTHDAYS: Birthday[] = [
-  { userId: "user1", birthday: "1990-01-01" },
-  { userId: "user2", birthday: "2003-05-12" },
-  { userId: "user3", birthday: "1997-10-04" },
+  { userId: "user1", date: "1990-01-01" },
+  { userId: "user2", date: "2003-05-12" },
+  { userId: "user3", date: "1997-10-04" },
 ]
 
 describe("birthdayRepository", ()=> {
