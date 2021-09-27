@@ -23,17 +23,17 @@ const EXAMPLE_BIRTHDAYS: Birthday[] = [
 
 describe("birthdayRepository", ()=> {
   describe("getBirthdays", () => {
-    test("returns empty list when birthday file is not created", async () => {
+    it("returns empty list when birthday file is not created", async () => {
       const birthdays = await getBirthdays()
       expect(birthdays).toStrictEqual([])
     })
     
-    test("creates the birthday file if called when it does not exist", async () => {
+    it("creates the birthday file if called when it does not exist", async () => {
       await getBirthdays()
       expect(birthdayFileExists()).toBe(true)
     })
 
-    test("returns the list of birthdays stored in the birthday file", async () => {
+    it("returns the list of birthdays stored in the birthday file", async () => {
       await setBirthdays(EXAMPLE_BIRTHDAYS)
 
       const birthdays = await getBirthdays()
@@ -42,7 +42,7 @@ describe("birthdayRepository", ()=> {
     })
   }),
   describe("setBirthdays", () => {
-    test("overwrites existing birthday file", async () => {
+    it("overwrites existing birthday file", async () => {
       await setBirthdays([])
 
       setBirthdays(EXAMPLE_BIRTHDAYS)
