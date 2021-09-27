@@ -20,6 +20,7 @@ export default function setBirthday(message: Discord.Message): void {
     addOrUpdateBirthday(userId, new Date(dateTimestamp))
   } catch (e) {
     message.reply("Error adding birthday: " + e)
+    return
   }
 
   message.reply(`Added birthday ${dateString}`)
