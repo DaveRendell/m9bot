@@ -1,6 +1,10 @@
 import * as Discord from "discord.js"
 import { addOrUpdateBirthday } from "src/services/birthdayService"
 
+/**
+ * Discord response to a user that wishes to set their birthday so that the 
+ * `sendBirthdayMessages` scheduled job cna congratulate them on the day.
+ */
 export default function setBirthday(message: Discord.Message): void {
   const userId = message.member?.id
   if (userId === undefined) {
