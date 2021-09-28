@@ -1,4 +1,5 @@
 import * as Discord from "discord.js"
+import Birthday from "src/models/birthday"
 import { getTodaysBirthdays } from "src/services/birthdayService"
 const { mainChannelId } = require("../../discordToken.json")
 
@@ -7,7 +8,13 @@ export default function sendBirthdayMessages(
 ): () => Promise<void> {
   return async () => {
     console.log("Checking for birthdays...")
-    const todaysBirthdays = await getTodaysBirthdays()
+    let todaysBirthdays: Birthday[]
+    try {
+      todaysBirthdays = await getTodaysBirthdays()
+    } catch (e) {
+      console.log("Error fetching today's birthdays: ", e)
+      return
+    }
 
     console.log(`Found ${todaysBirthdays.length} birthday(s) today.`)
 
@@ -17,7 +24,7 @@ export default function sendBirthdayMessages(
 
       
 
-      if (channel === undefined || !channel?.isText) {
+      if (channel === undefined || !channel.isText) {
         console.log(`Unable to connect to channel ID ${mainChannelId}, `
           + `birthday message not posted.`)
         return
