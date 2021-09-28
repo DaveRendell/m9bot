@@ -1,7 +1,7 @@
 import * as Discord from "discord.js"
+import { MAIN_DISCORD_CHANNEL } from "src/config"
 import Birthday from "src/models/birthday"
 import { getTodaysBirthdays } from "src/services/birthdayService"
-const { mainChannelId } = require("../../discordToken.json")
 
 export default function sendBirthdayMessages(
   discordClient: Discord.Client
@@ -20,12 +20,12 @@ export default function sendBirthdayMessages(
 
     todaysBirthdays.forEach(birthday => {
       console.log("Sending birthday message for user " + birthday.userId)
-      const channel = discordClient.channels.cache.get(mainChannelId)
+      const channel = discordClient.channels.cache.get(MAIN_DISCORD_CHANNEL)
 
       
 
       if (channel === undefined || !channel.isText) {
-        console.log(`Unable to connect to channel ID ${mainChannelId}, `
+        console.log(`Unable to connect to channel ID ${MAIN_DISCORD_CHANNEL}, `
           + `birthday message not posted.`)
         return
       }

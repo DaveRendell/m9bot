@@ -1,6 +1,6 @@
 import * as Discord from "discord.js"
+import { DISCORD_TOKEN } from "./config"
 import setBirthday from "./discordResponses/setBirthday"
-const { token } = require("../discordToken.json")
 
 /**
  * Sets up the discord client, including setting responses to messages and other
@@ -15,7 +15,7 @@ export default function setupDiscord(): Discord.Client {
     }
   })
   
-  discordClient.login(token)
+  discordClient.login(DISCORD_TOKEN)
   console.log("Connected to Discord")
   return discordClient
 }
