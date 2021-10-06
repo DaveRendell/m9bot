@@ -105,8 +105,8 @@ dist
 
 # App specific ignores start here
 
-# Don't check in the secure discord bot token
-discordToken.json
+# Don't check in the config file
+config.json
 
 # Don't check in the birthday list
 birthdays*.json

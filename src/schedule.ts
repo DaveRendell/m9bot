@@ -1,6 +1,6 @@
 import * as Discord from "discord.js"
 import * as nodeCron from "node-cron"
-import { NINE_AM_DAILY_CRON_STRING } from "./config"
+import config from "./config"
 import sendBirthdayMessages from "./scheduledJobs/sendBirthdayMessages"
 
 /**
@@ -10,6 +10,6 @@ export default function setupScheduledJobs(
   discordClient: Discord.Client
 ): void {
   nodeCron.schedule(
-    NINE_AM_DAILY_CRON_STRING, 
+    config.cron.sendBirthdayMessages, 
     sendBirthdayMessages(discordClient))
 }

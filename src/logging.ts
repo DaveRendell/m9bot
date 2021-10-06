@@ -6,7 +6,7 @@ export function info(message: string): void {
   console.log(`[${timestamp()}] ${message}`)
 }
 
-export function error(message: string, error?: any)  {
+export function error(message: string, error?: Error): void {
   console.error(`[${timestamp()}] ${message}`)
   error && console.error(error)
 }

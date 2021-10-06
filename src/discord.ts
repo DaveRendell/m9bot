@@ -1,5 +1,5 @@
 import * as Discord from "discord.js"
-import { DISCORD_TOKEN } from "./config"
+import config from "./config"
 import setBirthday from "./discordResponses/setBirthday"
 import * as Log from "src/logging"
 
@@ -16,7 +16,7 @@ export default function setupDiscord(): Discord.Client {
     }
   })
   
-  discordClient.login(DISCORD_TOKEN)
+  discordClient.login(config.discord.token)
   Log.info("Connected to Discord")
   return discordClient
 }

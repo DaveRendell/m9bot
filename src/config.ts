@@ -1,8 +1,14 @@
-import DiscordConfig = require("../discordToken.json")
+import configFile = require("../config.json")
 
-export const BIRTHDAY_FILE = "birthdays.json"
+interface Config {
+  birthdayFile: string
+  discord: {
+    token: string,
+    mainChannelId: string
+  },
+  cron: {
+    sendBirthdayMessages: string
+  }
+}
 
-export const NINE_AM_DAILY_CRON_STRING = "0 9 * * *"
-
-export const DISCORD_TOKEN = DiscordConfig.token
-export const MAIN_DISCORD_CHANNEL = DiscordConfig.mainChannelId
+export default configFile as unknown as Config

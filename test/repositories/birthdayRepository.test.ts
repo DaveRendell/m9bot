@@ -1,18 +1,20 @@
 import * as fs from "fs"
-import { BIRTHDAY_FILE } from "src/config"
+import config from "src/config"
 import { getBirthdays, setBirthdays } from "src/repositories/birthdayRepository"
 import Birthday from "src/models/birthday"
 
 jest.mock("src/config", () => ({
-  BIRTHDAY_FILE: "birthdays.test.json"
+  default: {
+    birthdayFile: "birthdays.test.json"
+  }
 }))
 
 function birthdayFileExists(): boolean {
-  return fs.existsSync(BIRTHDAY_FILE)
+  return fs.existsSync(config.birthdayFile)
 }
 
 afterEach(() => {
-  fs.unlinkSync(BIRTHDAY_FILE)
+  fs.unlinkSync(config.birthdayFile)
 })
 
 const EXAMPLE_BIRTHDAYS: Birthday[] = [

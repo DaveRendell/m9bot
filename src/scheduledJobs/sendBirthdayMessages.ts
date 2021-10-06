@@ -1,5 +1,5 @@
 import * as Discord from "discord.js"
-import { MAIN_DISCORD_CHANNEL } from "src/config"
+import config from "src/config"
 import Birthday from "src/models/birthday"
 import { getTodaysBirthdays } from "src/services/birthdayService"
 import * as Log from "src/logging"
@@ -16,8 +16,8 @@ export default function sendBirthdayMessages(
     let todaysBirthdays: Birthday[]
     try {
       todaysBirthdays = await getTodaysBirthdays()
-    } catch (e) {
-      Log.error("Error fetching today's birthdays: ", e)
+    } catch (e: unknown) {
+      Log.error("Error fetching today's birthdays: ", e as Error)
       return
     }
 
@@ -25,13 +25,12 @@ export default function sendBirthdayMessages(
 
     todaysBirthdays.forEach(birthday => {
       Log.info("Sending birthday message for user " + birthday.userId)
-      const channel = discordClient.channels.cache.get(MAIN_DISCORD_CHANNEL)
-
-      
+      const channel = discordClient.channels.cache
+        .get(config.discord.mainChannelId)
 
       if (channel === undefined || !channel.isText) {
-        Log.error(`Unable to connect to channel ID ${MAIN_DISCORD_CHANNEL}, `
-          + `birthday message not posted.`)
+        Log.error("Unable to connect to channel ID "
+          + `${config.discord.mainChannelId}, birthday message not posted.`)
         return
       }
 

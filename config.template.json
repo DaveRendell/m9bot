@@ -1,0 +1,10 @@
+{
+  "birthdayFile": "birthdays.json",
+  "discord": {
+    "token": "Insert token from Discord developer portal here",
+    "mainChannelId": "Insert ID for the main channel on the server here"
+  },
+  "cron": {
+    "sendBirthdayMessages": "0 9 * * *"
+  }
+}
