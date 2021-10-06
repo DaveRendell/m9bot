@@ -1,4 +1,4 @@
-import configFile = require("../config.json")
+import configFile = require("src/../config.json")
 
 interface Config {
   birthdayFile: string

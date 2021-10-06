@@ -35,4 +35,43 @@ Run `npm run dev` to launch in nodemon with hot reloading of code
 Run `npm test` to run the tests. Check test coverage with `npm run coverage`
 
 ## Deployment
-Todo...
+### First time setup
+These instructions are based on my experience deploying the bot to a Raspberry
+Pi. Different systems will probably require a bit of trial and error.
+
+**Create a system service**: Create a file at `/etc/systemd/system/m9bot.service`, containing the following:
+```ini
+[Unit]
+Description=M9 Discord bot service
+After=network.target
+
+[Service]
+Environment="NODE_ENV=production"
+Environment="NODE_PATH=/home/pi/m9bot/dist"
+ExecStart=/home/pi/.nvm/versions/node/v15.11.0/bin/node /home/pi/m9bot/dist/src/main.js
+WorkingDirectory=/home/pi/m9bot    
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Next, run the script `npm run deploy --server=pi@<raspberrypi IP Address>`, to
+run the automated deploy script. You'll want to have set up your SSH keys to 
+allow passwordless access to the Pi if possible. See `deploy.sh` to better 
+understand what the script does.
+
+**Copy config** Copy the config file `config.json` to `~/m9bot/dist/config.json`
+on the Raspberry Pi.
+
+**Set the service to run at startup** Run `sudo systemctl enable m9bot` to make
+the service run when the Pi starts up.
+
+**Check logs** Run `journalctl -u m9bot -b` to see the service logs.
+
+**Updating the deployment** Running 
+`npm run deploy --server=pi@<raspberrypi IP Address>` again should automatically
+update the deployment on the Pi to the version you have locally.

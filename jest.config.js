@@ -11,5 +11,6 @@ module.exports = {
     "src/repositories/**/*",
     "src/scheduledJobs/**/*",
     "src/services/**/*",
-  ]
+  ],
+  modulePathIgnorePatterns: ["<rootDir>/dist/"]
 };

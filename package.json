@@ -9,8 +9,8 @@
     "dev": "nodemon",
     "lint": "eslint src/ --ext .ts",
     "build": "npm run lint && tsc",
-    "prestart": "npm run build",
-    "start": "node dist/main.js"
+    "start": "NODE_PATH=dist node dist/src/main.js",
+    "deploy": "./deploy.sh"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/jest": "^27.0.2",
     "@types/node-cron": "^2.0.4",
+    "@types/ws": "^8.2.0",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.31.2",
     "eslint": "^7.32.0",
