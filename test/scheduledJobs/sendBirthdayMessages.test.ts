@@ -4,6 +4,10 @@ import * as birthdayService from "src/services/birthdayService"
 import { mocked } from "ts-jest/utils"
 
 jest.mock("src/services/birthdayService")
+jest.mock("src/logging", () => ({
+  info: () => {},
+  error: () => {}
+}))
 
 const mockedBirthdayService = mocked(birthdayService)
 
