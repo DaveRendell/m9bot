@@ -3,6 +3,7 @@ import config from "./config"
 import setBirthday from "./discordResponses/setBirthday"
 import * as Log from "src/logging"
 import pinMessage from "./discordResponses/pinMessage"
+import unpinMessage from "./discordResponses/unpinMessage"
 
 /**
  * Sets up the discord client, including setting responses to messages and other
@@ -20,6 +21,12 @@ export default function setupDiscord(): Discord.Client {
   discordClient.on("messageReactionAdd", (reaction) => {
     if (reaction.emoji.name === '📌') {
       pinMessage(reaction.message)
+    }
+  })
+
+  discordClient.on("messageReactionRemove", (reaction) => {
+    if (reaction.emoji.name === '📌') {
+      unpinMessage(reaction.message)
     }
   })
   

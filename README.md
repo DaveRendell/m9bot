@@ -5,6 +5,8 @@ Bot for the M9 Discord server
 - Set your birthday to get birthday notifications: post a message on Discord
   with the format `set birthday YYYY-MM-DD`. The bot will reply if your message
   was successfully added.
+- Pin messages by reacting with the 📌 emoji (may not work great for older
+  messages)
 - More to come...
 
 ## Development
