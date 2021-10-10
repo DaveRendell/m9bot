@@ -31,3 +31,7 @@ export async function getTodaysBirthdays(): Promise<Birthday[]> {
 function getShortDateString(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
+
+export async function getUpcomingBirthdays(): Promise<Birthday[]> {
+  return []
+}
