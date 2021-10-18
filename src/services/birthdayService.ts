@@ -1,5 +1,6 @@
 import { getBirthdays, setBirthdays } from "src/repositories/birthdayRepository"
 import Birthday from "src/models/birthday"
+import { getNextAnniversary } from "src/helpers/dateHelpers"
 /**
  * Contains functions containing business logic around user's birthdays
  */
@@ -27,11 +28,18 @@ export async function getTodaysBirthdays(): Promise<Birthday[]> {
     date.slice(4) === todaysDate.slice(4))
 }
 
+export async function getUpcomingBirthdays(): Promise<Birthday[]> {
+  const birthdays = await getBirthdays()
+  const nextBirthdays = birthdays.map(({userId, date}) => ({
+    userId,
+    date: getShortDateString(
+      getNextAnniversary(new Date(date)))
+  }))
+
+  return nextBirthdays.sort((a, b) => a.date > b.date ? 1 : -1)
+}
+
 // Returns date string in YYYY-MM-DD format
 function getShortDateString(date: Date): string {
   return date.toISOString().slice(0, 10);
-}
-
-export async function getUpcomingBirthdays(): Promise<Birthday[]> {
-  return []
 }

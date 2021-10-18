@@ -5,6 +5,7 @@ import * as Log from "src/logging"
 import pinMessage from "./discordResponses/pinMessage"
 import unpinMessage from "./discordResponses/unpinMessage"
 import helpMessage from "./discordResponses/helpMessage"
+import listBirthdays from "./discordResponses/listBirthdays"
 
 /**
  * Sets up the discord client, including setting responses to messages and other
@@ -16,6 +17,10 @@ export default function setupDiscord(): Discord.Client {
   discordClient.on("message", (message: Discord.Message) => {
     if (message.content.startsWith("set birthday")) {
       setBirthday(message)
+    }
+
+    if (message.content === "list birthdays") {
+      listBirthdays(message)
     }
 
     const messageIsForAllUsers = message.content.includes("@here")

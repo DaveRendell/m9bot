@@ -13,6 +13,7 @@ const getUser = jest.fn()
 
 const mockUser1 = { nickname: "user1" }
 const mockUser2 = { nickname: "user2" }
+const mockUserWithoutNickname = { displayName: "noNickNameUser" }
 
 getUser.mockReturnValueOnce(mockUser1)
 getUser.mockReturnValueOnce(mockUser2)
@@ -28,6 +29,7 @@ const message = {
 
 const birthday1: Birthday = { userId: "user1", date: "2001-02-03"}
 const birthday2: Birthday = { userId: "user2", date: "2001-02-01"}
+const noNickNameBirthday: Birthday = { userId: "noNick", date: "2001-02-03"}
 
 function setReturnedBirthdays(birthdays: Birthday[]) {
   mockedBirthdayService.getUpcomingBirthdays.mockResolvedValue(
@@ -44,22 +46,31 @@ afterEach(() => {
 })
 
 describe("listBirthdays", () => {
-  it("Replies to the message", async () => {
+  it("replies to the message", async () => {
     await listBirthdays(message)
 
     expect(mockReply).toHaveBeenCalledTimes(1)
   })
-  it("Says there are no birthdays if none are present", async () => {
+  it("says there are no birthdays if none are present", async () => {
     await listBirthdays(message)
 
     expect(mockReply.mock.calls[0][0]).toContain("No birthdays")
   })
-  it("Lists birthdays if some are returned", async () => {
+  it("lists birthdays if some are returned", async () => {
     setReturnedBirthdays([birthday1, birthday2])
 
     await listBirthdays(message)
 
     expect(mockReply.mock.calls[0][0]).toContain("user1")
     expect(mockReply.mock.calls[0][0]).toContain("user2")
+  })
+  it("falls back to display name for users with no nickname", async () => {
+    getUser.mockReturnValue(mockUserWithoutNickname)
+    setReturnedBirthdays([noNickNameBirthday])
+
+    await listBirthdays(message)
+
+    expect(mockReply.mock.calls[0][0]).toContain(
+      mockUserWithoutNickname.displayName)
   })
 })

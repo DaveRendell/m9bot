@@ -1,4 +1,4 @@
-import { addOrUpdateBirthday, getTodaysBirthdays } from "src/services/birthdayService"
+import { addOrUpdateBirthday, getTodaysBirthdays, getUpcomingBirthdays } from "src/services/birthdayService"
 import * as repository from "src/repositories/birthdayRepository"
 import { mocked } from "ts-jest/utils"
 import Birthday from "src/models/birthday"
@@ -10,6 +10,11 @@ const mockedRepository = mocked(repository)
 function setExistingBirthdays(birthdays: Birthday[]) {
   mockedRepository.getBirthdays.mockReturnValue(Promise.resolve(birthdays))
 }
+
+beforeAll(() => {
+  jest.useFakeTimers('modern')
+  jest.setSystemTime(new Date(2021, 10, 10))
+})
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -89,6 +94,29 @@ describe("birthdayService", () => {
       const birthdays = await getTodaysBirthdays()
 
       expect(birthdays.map(birthday => birthday.userId)).toEqual([])
+    })
+  })
+  describe("getUpcomingBirthdays", () => {
+    it("returns all birthdays", async () => {
+      setExistingBirthdays([
+        { userId: "user1", date: "1975-01-03" },
+        { userId: "user2", date: "1990-05-03" },
+      ])
+
+      const result = await getUpcomingBirthdays()
+
+      expect(result).toHaveLength(2)
+    })
+    it("returns birthdays ordered by time until next birthday", async () => {
+      setExistingBirthdays([
+        { userId: "user1", date: "1975-10-11" },
+        { userId: "user2", date: "1990-05-09" },
+      ])
+
+      const result = await getUpcomingBirthdays()
+
+      expect(result[0].userId).toBe("user2")
+      expect(result[1].userId).toBe("user1")
     })
   })
 })

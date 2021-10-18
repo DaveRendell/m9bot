@@ -19,10 +19,15 @@ export default async function listBirthdays(
       "en-GB", {month: "long", day: "numeric"})
     return { user, date: niceDateString }
   }).filter(({user}) => user !== undefined)
+  .map(({user, date}) => ({
+    name: (user as Discord.GuildMember).nickname
+      || (user as Discord.GuildMember).displayName,
+    date
+  }))
 
-  message.reply(`📅 Upcoming birthdays:
-  ${userDatePairs.map(({user, date}) =>
-    ` - ${(user as Discord.GuildMember).nickname}: ${date}`
-  ).join("\n")
-  }`)
+  message.reply("📅 Upcoming birthdays:\n"
+   + userDatePairs.map(({name, date}) =>
+      `${name}: ${date}`
+    ).join("\n")
+  )
 }
