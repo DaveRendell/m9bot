@@ -2,6 +2,7 @@ import configFile = require("src/../config.json")
 
 interface Config {
   birthdayFile: string
+  selfServiceRoleMessageFile: string
   discord: {
     token: string,
     mainChannelId: string

@@ -23,7 +23,7 @@ const EXAMPLE_BIRTHDAYS: Birthday[] = [
   { userId: "user3", date: "1997-10-04" },
 ]
 
-describe("birthdayRepository", ()=> {
+describe("birthdayRepository", () => {
   describe("getBirthdays", () => {
     it("returns empty list when birthday file is not created", async () => {
       const birthdays = await getBirthdays()
