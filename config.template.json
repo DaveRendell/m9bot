@@ -3,7 +3,8 @@
   "selfServiceRoleMessageFile": "selfServiceRoleMessage.txt",
   "discord": {
     "token": "Insert token from Discord developer portal here",
-    "mainChannelId": "Insert ID for the main channel on the server here"
+    "mainChannelId": "Insert ID for the main channel on the server here",
+    "selfServiceMessageChannelId": "Insert ID for the self service role message to be posted in"
   },
   "cron": {
     "sendBirthdayMessages": "0 9 * * *"

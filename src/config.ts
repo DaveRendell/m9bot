@@ -5,7 +5,8 @@ interface Config {
   selfServiceRoleMessageFile: string
   discord: {
     token: string,
-    mainChannelId: string
+    mainChannelId: string,
+    selfServiceMessageChannelId: string
   },
   cron: {
     sendBirthdayMessages: string
