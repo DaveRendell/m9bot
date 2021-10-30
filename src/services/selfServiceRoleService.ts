@@ -1,6 +1,7 @@
 import * as Discord from "discord.js"
 import * as repository from "src/repositories/staticMessageRepository"
 import config from "src/config"
+import { getSelfServiceRoles } from "src/repositories/selfServiceRolesRepository"
 /**
  * Contains methods for controlling business logic around 
  * allowing users to self assign roles.
@@ -18,4 +19,14 @@ export async function getOrCreateSelfServiceRoleMessage(discord: Discord.Client)
     await repository.setSelfServiceRoleMessageId(message.id)
     return message
   }
-} 
+}
+
+export async function getSelfServiceRolesMessageContent(): Promise<string> {
+  const roles = await getSelfServiceRoles()
+
+  if (roles.length === 0) {
+    return "No roles are currently configured"
+  }
+  return "Respond with the corresponding emoji to be assigned a role:\n"
+    + roles.map(({emoji, description}) => `${emoji} - ${description}`).join("\n") 
+}

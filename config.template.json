@@ -1,5 +1,6 @@
 {
   "birthdayFile": "birthdays.json",
+  "selfServiceRoleFile": "selfServiceRoles.json",
   "selfServiceRoleMessageFile": "selfServiceRoleMessage.txt",
   "discord": {
     "token": "Insert token from Discord developer portal here",

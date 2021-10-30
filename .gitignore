@@ -108,6 +108,7 @@ dist
 # Don't check in the config file
 config.json
 
-# Don't check in the birthday list
+# Don't check in the various bits of state
 birthdays*.json
 selfServiceRoleMessageId*.txt
+selfServiceRoles*.json

@@ -1,10 +1,27 @@
-import { getOrCreateSelfServiceRoleMessage } from "src/services/selfServiceRoleService"
-import * as repository from "src/repositories/staticMessageRepository"
+import { getOrCreateSelfServiceRoleMessage, getSelfServiceRolesMessageContent } from "src/services/selfServiceRoleService"
+import * as staticMessageRepository from "src/repositories/staticMessageRepository"
+import * as selfServiceRolesRepository from "src/repositories/selfServiceRolesRepository"
 import { mocked } from "ts-jest/utils"
 import * as Discord from "discord.js"
+import SelfServiceRole from "src/models/selfServiceRole"
 
 jest.mock("src/repositories/staticMessageRepository")
-const mockedRepository = mocked(repository)
+jest.mock("src/repositories/selfServiceRolesRepository")
+const mockedStaticMessageRepository = mocked(staticMessageRepository)
+const mockedSelfServiceRolesRepository = mocked(selfServiceRolesRepository)
+
+const EXAMPLE_ROLES: SelfServiceRole[] = [
+  {
+    "emoji": "🐧",
+    "roleId": "1234",
+    "description": "cool dood"
+  },
+  {
+    "emoji": "🍎",
+    "roleId": "5678",
+    "description": "apple"
+  }
+]
 
 const mockMessage = {
   id: "precreatedMessage"
@@ -36,7 +53,7 @@ jest.mock("src/config", () => ({
 }))
 
 function setMessageId(messageId: string | null) {
-  mockedRepository
+  mockedStaticMessageRepository
     .getSelfServiceRoleMessageId
     .mockResolvedValue(messageId)
 }
@@ -63,7 +80,24 @@ describe("selfServiceRoleService", () => {
 
       await getOrCreateSelfServiceRoleMessage(mockDiscordClient)
 
-      expect(mockedRepository.setSelfServiceRoleMessageId).toHaveBeenCalledWith("newMessage")
+      expect(mockedStaticMessageRepository.setSelfServiceRoleMessageId).toHaveBeenCalledWith("newMessage")
+    })
+  })
+  describe("getSelfServiceRoleMessageContent", () => {
+    it("contains custom message when no roles configured", async() => {
+      mockedSelfServiceRolesRepository.getSelfServiceRoles.mockResolvedValue([])
+
+      const content = await getSelfServiceRolesMessageContent()
+
+      expect(content).toContain("No roles are currently configured")
+    })
+    it("contains role info when roles are configured", async () => {
+      mockedSelfServiceRolesRepository.getSelfServiceRoles.mockResolvedValue(EXAMPLE_ROLES)
+      
+      const content = await getSelfServiceRolesMessageContent()
+
+      expect(content).toContain("🐧 - cool dood")
+      expect(content).toContain("🍎 - apple")
     })
   })
 })
