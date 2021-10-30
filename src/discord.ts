@@ -11,7 +11,7 @@ import listBirthdays from "./discordResponses/listBirthdays"
  * Sets up the discord client, including setting responses to messages and other
  * user interactions.
  */
-export default function setupDiscord(): Discord.Client {
+export default async function setupDiscord(): Promise<Discord.Client> {
   const discordClient = new Discord.Client()
 
   discordClient.on("message", (message: Discord.Message) => {
@@ -47,7 +47,7 @@ export default function setupDiscord(): Discord.Client {
     }
   })
   
-  discordClient.login(config.discord.token)
+  await discordClient.login(config.discord.token)
   Log.info("Connected to Discord")
   return discordClient
 }

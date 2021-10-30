@@ -16,18 +16,14 @@ const mockSend = jest.fn(() => ({
 
 const mockChannel = {
   messages: {
-    cache: {
-      get: jest.fn(() => mockMessage)
-    }
+    fetch: jest.fn(() => Promise.resolve(mockMessage))
   },
   send: mockSend
 } as unknown as Discord.Channel
 
 const mockDiscordClient = {
   channels: {
-    cache: {
-      get: jest.fn(() => mockChannel)
-    }
+    fetch: jest.fn(() => Promise.resolve(mockChannel))
   }
 } as unknown as Discord.Client
 
@@ -61,6 +57,13 @@ describe("selfServiceRoleService", () => {
 
       expect(message.id).toBe("newMessage")
       expect(mockSend).toHaveBeenCalled()
+    })
+    it("updates the static message ID when a new message is created", async () => {
+      setMessageId(null)
+
+      await getOrCreateSelfServiceRoleMessage(mockDiscordClient)
+
+      expect(mockedRepository.setSelfServiceRoleMessageId).toHaveBeenCalledWith("newMessage")
     })
   })
 })

@@ -110,3 +110,4 @@ config.json
 
 # Don't check in the birthday list
 birthdays*.json
+selfServiceRoleMessageId*.txt

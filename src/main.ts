@@ -8,6 +8,4 @@ import setupDiscord from "./discord"
  * `./schedule.ts` for more info on each respectively.
  */
 
-const discordClient = setupDiscord()
-
-setupScheduledJobs(discordClient)
+setupDiscord().then(setupScheduledJobs)

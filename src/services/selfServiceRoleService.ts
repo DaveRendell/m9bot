@@ -8,14 +8,14 @@ import config from "src/config"
 
 export async function getOrCreateSelfServiceRoleMessage(discord: Discord.Client): Promise<Discord.Message> {
   const messageId = await repository.getSelfServiceRoleMessageId()
-  const channel = discord
+  const channel = await discord
       .channels
-      .cache
-      .get(config.discord.selfServiceMessageChannelId) as Discord.TextChannel
+      .fetch(config.discord.selfServiceMessageChannelId, false, true) as Discord.TextChannel
   if (messageId !== null) {
-    return channel.messages.cache.get(messageId) as Discord.Message
+    return await channel.messages.fetch(messageId) as Discord.Message
   } else {
-    const message = await channel.send("Use this message to self assign yourself roles (QQ)")
+    const message = await channel.send("Please wait...")
+    await repository.setSelfServiceRoleMessageId(message.id)
     return message
   }
 } 
