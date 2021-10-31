@@ -13,7 +13,8 @@
     "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
-      "src": ["src/"]
+      "src": ["src/"],
+      "test": ["test/"]
     },
     "resolveJsonModule": true
   },
