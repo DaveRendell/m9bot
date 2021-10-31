@@ -6,6 +6,9 @@ import pinMessage from "./discordResponses/pinMessage"
 import unpinMessage from "./discordResponses/unpinMessage"
 import helpMessage from "./discordResponses/helpMessage"
 import listBirthdays from "./discordResponses/listBirthdays"
+import { getOrCreateSelfServiceRoleMessage } from "./services/selfServiceRoleService"
+import assignRole from "./discordResponses/assignRole"
+import removeRole from "./discordResponses/removeRole"
 
 /**
  * Sets up the discord client, including setting responses to messages and other
@@ -34,20 +37,33 @@ export default async function setupDiscord(): Promise<Discord.Client> {
       helpMessage(message)
     }
   })
-
-  discordClient.on("messageReactionAdd", (reaction) => {
-    if (reaction.emoji.name === '📌') {
-      pinMessage(reaction.message)
-    }
-  })
-
-  discordClient.on("messageReactionRemove", (reaction) => {
-    if (reaction.emoji.name === '📌') {
-      unpinMessage(reaction.message)
-    }
-  })
   
   await discordClient.login(config.discord.token)
+
+  const selfServiceMessage = await getOrCreateSelfServiceRoleMessage(discordClient)
+  
+  discordClient.on("messageReactionAdd", async (reaction, user) => {
+    if (reaction.emoji.name === '📌') {
+      pinMessage(reaction.message)
+    } else if (reaction.message.id === selfServiceMessage.id && user.id !== discordClient.user?.id) {
+      const fullUser = await reaction.message.guild?.members.fetch(user.id)
+      if (fullUser) {
+        assignRole(reaction, fullUser)
+      }
+    }
+  })
+
+  discordClient.on("messageReactionRemove", async (reaction, user) => {
+    if (reaction.emoji.name === '📌') {
+      unpinMessage(reaction.message)
+    } else if (reaction.message.id === selfServiceMessage.id && user.id !== discordClient.user?.id) {
+      const fullUser = await reaction.message.guild?.members.fetch(user.id)
+      if (fullUser) {
+        removeRole(reaction, fullUser)
+      }
+    }
+  })
+
   Log.info("Connected to Discord")
   return discordClient
 }
