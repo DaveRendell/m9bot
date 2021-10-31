@@ -1,56 +1,32 @@
-import { Message, MessageReaction } from "discord.js"
 import unpinMessage from "src/discordResponses/unpinMessage"
-jest.mock("src/logging", () => ({
-  info: () => {},
-  error: () => {}
-}))
+import { mockMessage, mockMessageReaction } from "test/mocks/discord"
+import { mocked } from "ts-jest/utils"
+jest.mock("src/logging")
 
-const mockUnPin = jest.fn()
-
-const mockReaction = {} as unknown as MessageReaction
-
-const pinnedMessage = {
-  pinned: true,
-  reactions: {
-    resolve: () => null
-  },
-  unpin: mockUnPin
-} as unknown as Message
-
-const stillPinnedMessage = {
-  pinned: true,
-  reactions: {
-    resolve: () => mockReaction
-  },
-  unpin: mockUnPin
-} as unknown as Message
-
-const unpinnedMessage = {
-  pinned: false,
-  reactions: {
-    resolve: () => null
-  },
-  unpin: mockUnPin
-} as unknown as Message
+const unpinnedMessage = mockMessage({pinned: false})
+const pinnedMessage = mockMessage({pinned: true})
 
 afterEach(() => {
-  mockUnPin.mockClear()
+  jest.clearAllMocks()
 })
 
 describe("unpinMessage", () => {
   it("unpins a message that has had its last 📌 reaction removed", () => {
     unpinMessage(pinnedMessage)
 
-    expect(mockUnPin).toHaveBeenCalledTimes(1)
+    expect(pinnedMessage.unpin).toHaveBeenCalledTimes(1)
   })
   it("does not unpin a message that has 📌 reactions remaining", () => {
-    unpinMessage(stillPinnedMessage)
+    mocked(pinnedMessage.reactions.resolve)
+      .mockReturnValue(mockMessageReaction())
+    
+    unpinMessage(pinnedMessage)
 
-    expect(mockUnPin).not.toHaveBeenCalled()
+    expect(pinnedMessage.unpin).not.toHaveBeenCalled()
   })
   it("does not unpin a message that isn't pinned", () => {
     unpinMessage(unpinnedMessage)
 
-    expect(mockUnPin).not.toHaveBeenCalled()
+    expect(unpinnedMessage.unpin).not.toHaveBeenCalled()
   })
 })

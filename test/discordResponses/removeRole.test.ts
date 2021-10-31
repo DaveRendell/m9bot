@@ -26,4 +26,10 @@ describe("removeRole", () => {
 
     expect(user.roles.remove).not.toHaveBeenCalled()
   })
+  it("does nothing if it does not match an assignable role", async () => {
+    const reaction = mockMessageReaction("🤷‍♀️")
+    await removeRole(reaction, user)
+
+    expect(user.roles.remove).not.toHaveBeenCalled()
+  })
 })

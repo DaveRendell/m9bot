@@ -1,35 +1,19 @@
-import { Message } from "discord.js"
 import pinMessage from "src/discordResponses/pinMessage"
-jest.mock("src/logging", () => ({
-  info: () => {},
-  error: () => {}
-}))
+import { mockMessage } from "test/mocks/discord"
+jest.mock("src/logging")
 
-const mockPin = jest.fn()
-
-const unpinnedMessage = {
-  pinned: false,
-  pin: mockPin
-} as unknown as Message
-
-const pinnedMessage = {
-  pinned: true,
-  pin: mockPin
-} as unknown as Message
-
-afterEach(() => {
-  mockPin.mockClear()
-})
+const unpinnedMessage = mockMessage({pinned: false})
+const pinnedMessage = mockMessage({pinned: true})
 
 describe("pinMessage", () => {
   it("pins a message that was not already pinned", async () => {
     pinMessage(unpinnedMessage)
 
-    expect(mockPin).toHaveBeenCalledTimes(1)
+    expect(unpinnedMessage.pin).toHaveBeenCalledTimes(1)
   })
   it("does not pin a message that was already pinned", async () => {
     pinMessage(pinnedMessage)
 
-    expect(mockPin).not.toHaveBeenCalled()
+    expect(pinnedMessage.pin).not.toHaveBeenCalled()
   })
 })
