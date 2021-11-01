@@ -1,16 +1,13 @@
-import * as Discord from "discord.js"
 import helpMessage from "src/discordResponses/helpMessage"
+import { mockMessage } from "test/mocks/discord"
+import { mocked } from "ts-jest/utils"
 
-const mockReply = jest.fn()
-
-const message = {
-  reply: mockReply
-} as unknown as Discord.Message
+const message = mockMessage()
 
 describe("helpMessage", () => {
   it("replies to the message with usage information", () => {
     helpMessage(message)
 
-    expect(mockReply).toHaveBeenCalledTimes(1)
+    expect(mocked(message.reply)).toHaveBeenCalledTimes(1)
   })
 })

@@ -1,65 +1,56 @@
 import setBirthday from "src/discordResponses/setBirthday"
-import * as Discord from "discord.js"
+import { getMockBirthdayService } from "test/mocks/services/mockBirthdayService"
+import { mockMessage, mockUser } from "test/mocks/discord"
 import { mocked } from "ts-jest/utils"
-import * as birthdayService from "src/services/birthdayService"
 
 jest.mock("src/services/birthdayService")
 
-const mockedBirthdayService = mocked(birthdayService)
+const mockedBirthdayService = getMockBirthdayService()
 
-const mockReply = jest.fn()
+const noMemberMessage = mockMessage({ member: undefined })
 
+const badDateMessage = mockMessage({
+  member: mockUser({ id: "user1" }),
+  content: "set birthday please"
+})
 
-const mockNoMemberMessage: Discord.Message = {
-  member: undefined,
-  reply: mockReply
-} as unknown as Discord.Message
-
-const mockBadDateMessage: Discord.Message = {
-  member: { id: "user1"},
-  content: "set birthday please",
-  reply: mockReply
-} as unknown as Discord.Message
-
-const mockMessage: Discord.Message = {
-  member: { id: "user1"},
-  content: "set birthday 1995-07-12",
-  reply: mockReply
-} as unknown as Discord.Message
+const goodMessage = mockMessage({
+  member: mockUser({ id: "user1" }),
+  content: "set birthday 1995-07-12"
+})
 
 afterEach(() => {
-  mockedBirthdayService.addOrUpdateBirthday.mockClear();
-  mockReply.mockClear();
+  jest.clearAllMocks()
 });
 
 describe("setBirthday", () => {
   it("does not send a reply if the message does not have a user", () => {
-    setBirthday(mockNoMemberMessage)
+    setBirthday(noMemberMessage)
 
-    expect(mockReply).not.toHaveBeenCalled()
+    expect(noMemberMessage.reply).not.toHaveBeenCalled()
   })
   it("replies with an error if the message contains an incorrectly formatted date", () => {
-    setBirthday(mockBadDateMessage)
+    setBirthday(badDateMessage)
 
-    expect(mockReply).toHaveBeenCalledTimes(1)
-    expect(mockReply.mock.calls[0][0]).toContain("Unable to parse date")
+    expect(badDateMessage.reply).toHaveBeenCalledTimes(1)
+    expect(mocked(badDateMessage.reply).mock.calls[0][0]).toContain("Unable to parse date")
   })
   it("replies with a stack trace if there is an error while setting the users birthday", () => {
     mockedBirthdayService.addOrUpdateBirthday.mockImplementation(() => {
       throw new Error("Error adding birthday")
     })
 
-    setBirthday(mockMessage)
+    setBirthday(goodMessage)
 
-    expect(mockReply).toHaveBeenCalledTimes(1)
-    expect(mockReply.mock.calls[0][0]).toContain("Error adding birthday")
+    expect(goodMessage.reply).toHaveBeenCalledTimes(1)
+    expect(mocked(goodMessage.reply).mock.calls[0][0]).toContain("Error adding birthday")
   })
   it("replies with a confirmation message when the user's birthday is set successfully", () => {
     mockedBirthdayService.addOrUpdateBirthday.mockResolvedValue(undefined)
 
-    setBirthday(mockMessage)
+    setBirthday(goodMessage)
 
-    expect(mockReply).toHaveBeenCalledTimes(1)
-    expect(mockReply.mock.calls[0][0]).toContain("Added birthday")
+    expect(goodMessage.reply).toHaveBeenCalledTimes(1)
+    expect(mocked(goodMessage.reply).mock.calls[0][0]).toContain("Added birthday")
   })
 })

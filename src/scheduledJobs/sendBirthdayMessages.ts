@@ -28,7 +28,7 @@ export default function sendBirthdayMessages(
       const channel = discordClient.channels.cache
         .get(config.discord.mainChannelId)
 
-      if (channel === undefined || !channel.isText) {
+      if (channel === undefined || !channel.isText()) {
         Log.error("Unable to connect to channel ID "
           + `${config.discord.mainChannelId}, birthday message not posted.`)
         return
