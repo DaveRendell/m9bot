@@ -5,6 +5,7 @@ type PartialWithoutValueOf<Type> = Omit<Partial<Type>, "valueOf">
 export function mockClient(): Discord.Client {
   return {
     channels: {
+      fetch: jest.fn(),
       cache: {
         get: jest.fn()
       }
@@ -35,8 +36,12 @@ export function mockChannel(
     members: {
       get: jest.fn(),
     },
+    messages: {
+      fetch: jest.fn()
+    },
     guild: mockGuild(),
     send: jest.fn(),
+    ...overrides,
   } as unknown as Discord.Channel
 }
 

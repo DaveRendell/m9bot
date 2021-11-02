@@ -1,11 +1,11 @@
 import { addOrUpdateBirthday, getTodaysBirthdays, getUpcomingBirthdays } from "src/services/birthdayService"
 import * as repository from "src/repositories/birthdayRepository"
-import { mocked } from "ts-jest/utils"
 import Birthday from "src/models/birthday"
+import { getMockBirthdayRepository } from "test/mocks/repositories/mockBirthdayRepository"
 
 jest.mock("src/repositories/birthdayRepository")
 
-const mockedRepository = mocked(repository)
+const mockedRepository = getMockBirthdayRepository()
 
 function setExistingBirthdays(birthdays: Birthday[]) {
   mockedRepository.getBirthdays.mockReturnValue(Promise.resolve(birthdays))
@@ -18,13 +18,12 @@ beforeAll(() => {
 
 afterEach(() => {
   jest.clearAllMocks();
+  getMockBirthdayRepository()
 });
 
 describe("birthdayService", () => {
   describe("addOrUpdateBirthday", () => {
     it("adds birthday to list if user has no existing birthday", async () => {
-      setExistingBirthdays([])
-
       await addOrUpdateBirthday("user1", new Date(1990, 4, 4))
 
       expect(repository.setBirthdays).toHaveBeenCalledWith([{
