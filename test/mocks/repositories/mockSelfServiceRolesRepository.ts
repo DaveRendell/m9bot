@@ -17,7 +17,7 @@ export const EXAMPLE_ROLES: SelfServiceRole[] = [
   }
 ]
 
-export function mockSelfServiceRolesRepository() {
+export function getMockSelfServiceRolesRepository() {
   const mock = mocked(selfServiceRolesRepository)
   mock.getSelfServiceRoles.mockResolvedValue(EXAMPLE_ROLES)
   return mock

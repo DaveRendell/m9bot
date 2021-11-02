@@ -1,6 +1,6 @@
 import removeRole from "src/discordResponses/removeRole"
 import { mockMessageReaction, mockRole, mockUser } from "test/mocks/discord"
-import { mockSelfServiceRolesRepository } from "test/mocks/repositories/mockSelfServiceRolesRepository"
+import { getMockSelfServiceRolesRepository } from "test/mocks/repositories/mockSelfServiceRolesRepository"
 import { mocked } from "ts-jest/utils"
 
 jest.mock("src/repositories/selfServiceRolesRepository")
@@ -10,7 +10,7 @@ const role = mockRole()
 
 beforeEach(() => {
   jest.resetAllMocks()
-  mockSelfServiceRolesRepository()
+  getMockSelfServiceRolesRepository()
 })
 
 describe("removeRole", () => {

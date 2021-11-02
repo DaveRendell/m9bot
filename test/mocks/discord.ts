@@ -72,6 +72,8 @@ export function mockMessage(
     pin: jest.fn(),
     unpin: jest.fn(),
     reply: jest.fn(),
+    edit: jest.fn(),
+    react: jest.fn(),
     reactions: {
       resolve: jest.fn()
     },
