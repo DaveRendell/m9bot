@@ -24,6 +24,7 @@ export function mockUser(
         get: jest.fn()
       }
     },
+    hasPermission: jest.fn(),
     ...overrides,
   } as unknown as Discord.GuildMember
 }
@@ -45,19 +46,24 @@ export function mockChannel(
   } as unknown as Discord.Channel
 }
 
-export function mockGuild(): Discord.Guild {
+export function mockGuild(overrides: PartialWithoutValueOf<Discord.Guild> = {}): Discord.Guild {
   return {
     members: {
       cache: {
         get: jest.fn()
       }
-    }
+    },
+    roles: {
+      fetch: jest.fn()
+    },
+    ...overrides
   } as unknown as  Discord.Guild
 }
 
-export function mockRole(id = "1234"): Discord.Role {
+export function mockRole(overrides: PartialWithoutValueOf<Discord.Role> = {}): Discord.Role {
   return {
-    id
+    id: 1234,
+    ...overrides
   } as unknown as Discord.Role
 }
 
@@ -83,6 +89,7 @@ export function mockMessage(
       resolve: jest.fn()
     },
     channel: mockChannel(),
+    guild: mockGuild(),
     ...overrides
   } as unknown as Discord.Message
 }

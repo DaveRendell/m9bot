@@ -10,8 +10,8 @@ Bot for the M9 Discord server
 - Pin messages by reacting with the 📌 emoji (may not work great for older
   messages)
 - Emoji react to the message in the set roles channel to self assign certain roles. 
-- More to come...
-
+- [Admins only] Add a role that users can self assign with
+  `add_self_service_role [tag the role here] [emoji for the role] [description]`
 ## Development
 
 ### Installing dependencies

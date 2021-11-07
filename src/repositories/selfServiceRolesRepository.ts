@@ -16,3 +16,11 @@ export async function getSelfServiceRoles(): Promise<SelfServiceRole[]> {
     return []
   }
 }
+
+export async function addSelfServiceRole(role: SelfServiceRole): Promise<void> {
+  const existingRoles = await getSelfServiceRoles()
+  const existingWithoutOverwrittenRole = existingRoles
+    .filter(oldRole => oldRole.roleId != role.roleId)
+  const newRoles = [...existingWithoutOverwrittenRole, role]
+  await fs.writeFile(config.selfServiceRoleFile, JSON.stringify(newRoles))
+}

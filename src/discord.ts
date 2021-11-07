@@ -9,6 +9,7 @@ import listBirthdays from "./discordResponses/listBirthdays"
 import { getOrCreateSelfServiceRoleMessage } from "./services/selfServiceRoleService"
 import assignRole from "./discordResponses/assignRole"
 import removeRole from "./discordResponses/removeRole"
+import addSelfServiceRole from "./discordResponses/addSelfServiceRole"
 
 /**
  * Sets up the discord client, including setting responses to messages and other
@@ -24,6 +25,10 @@ export default async function setupDiscord(): Promise<Discord.Client> {
 
     if (message.content === "list birthdays") {
       listBirthdays(message)
+    }
+
+    if (message.content.startsWith("add_self_service_role")) {
+      addSelfServiceRole(message)
     }
 
     const messageIsForAllUsers = message.content.includes("@here")
