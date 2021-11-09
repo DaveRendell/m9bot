@@ -8,5 +8,5 @@ export default function helpMessage(message: Discord.Message): void {
     + "- To pin a message, react with the 📌 (`pushpin`) emoji\n"
     + `- Self assign roles to view hidden channels in <#${config.discord.selfServiceMessageChannelId}>\n`
     + `- [Admin only] Add roles users can self assign with \`add_self_service_role [tag the role here] [emoji for the role] [description]\`\n`
-    + "See https://github.com/DaveRendell/m9bot for more info")
+    + "See <https://github.com/DaveRendell/m9bot> for more info")
 }
