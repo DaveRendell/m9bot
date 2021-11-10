@@ -6,7 +6,7 @@ import setupSelfServiceRoleMessage from "src/scheduledJobs/setupSelfServiceRoleM
  * Discord response to a user asking to add a new self service
  * role that users can assign to themselves.
  */
-const MESSAGE_REGEX = /add_self_service_role <@&(?<roleId>.*)> (?<emoji>.*?) (?<description>.*)/
+const MESSAGE_REGEX = /add_self_service_role\s+<@&(?<roleId>.*)>\s+(?<emoji>.*?)\s+(?<description>.*)/
 
 export default async function addSelfServiceRole(message: Discord.Message): Promise<void> {
   const match = MESSAGE_REGEX.exec(message.content)?.groups

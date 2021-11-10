@@ -13,11 +13,11 @@ const selfServiceRolesRepository = getMockSelfServiceRolesRepository()
 const nonAdmin = mockUser()
 const nonAdminMessage = mockMessage({
   member: nonAdmin,
-  content: "add_self_service_role <#12345678> 🐧 Pingu fans"
+  content: "add_self_service_role <@&12345678> 🐧 Pingu fans"
 })
 const sillyAttempt = mockMessage({
   member: nonAdmin,
-  content: "add_self_service_role <#12345678> 👺 Make me an admin pls",
+  content: "add_self_service_role <@&12345678> 👺 Make me an admin pls",
   guild: mockGuild({
     roles: {
       fetch: () => Promise.resolve(adminRole)
@@ -29,11 +29,15 @@ const adminRole = mockRole({name: "Administrator"})
 const admin = mockUser()
 const goodMessage = mockMessage({
   member: admin,
-  content: "add_self_service_role <#12345678> 🐧 Pingu fans"
+  content: "add_self_service_role <@&12345678> 🐧 Pingu fans"
 })
 const badMessage = mockMessage({
   member: admin,
   content: "add_self_service_role 12345678 🐧 Pingu fans"
+})
+const extraSpaceMessage = mockMessage({
+  member: admin,
+  content: "add_self_service_role <@&12345678>  🐧 Pingu fans"
 })
 
 beforeEach(() => {
@@ -74,5 +78,14 @@ describe("addSelfServiceRole", () => {
 
     expect(mocked(badMessage.reply).mock.calls[0][0])
       .toContain("Sorry, that's not quite right.")
+  })
+  it("handles extra spaces in the message okay", async() => {
+    await addSelfServiceRole(extraSpaceMessage)
+
+    expect(selfServiceRolesRepository.addSelfServiceRole).toHaveBeenCalledWith({
+      roleId: "12345678",
+      emoji: "🐧",
+      description: "Pingu fans"
+    })
   })
 })
