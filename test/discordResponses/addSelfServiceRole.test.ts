@@ -39,11 +39,13 @@ const extraSpaceMessage = mockMessage({
   member: admin,
   content: "add_self_service_role <@&12345678>  🐧 Pingu fans"
 })
+const selfServiceMessageJob = jest.fn()
 
 beforeEach(() => {
   jest.resetAllMocks()
   getMockSelfServiceRolesRepository()
   mocked(admin.hasPermission).mockReturnValue(true)
+  mocked(setupSelfServiceRoleMessage).mockReturnValue(selfServiceMessageJob)
 })
 
 describe("addSelfServiceRole", () => {
@@ -71,7 +73,7 @@ describe("addSelfServiceRole", () => {
   it("refreshes the self service static message", async () => {
     await addSelfServiceRole(goodMessage)
 
-    expect(setupSelfServiceRoleMessage).toBeCalled()
+    expect(selfServiceMessageJob).toBeCalled()
   })
   it("sends a helpful message if the usage is wrong", async () => {
     await addSelfServiceRole(badMessage)

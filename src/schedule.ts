@@ -11,7 +11,7 @@ export default function setupScheduledJobs(
   discordClient: Discord.Client
 ): void {
   // Jobs to run at startup
-  setupSelfServiceRoleMessage(discordClient)
+  setupSelfServiceRoleMessage(discordClient)()
 
   // Jobs to run on a cron schedule
   nodeCron.schedule(

@@ -3,12 +3,13 @@ import config from "src/config"
 import Birthday from "src/models/birthday"
 import { getTodaysBirthdays } from "src/services/birthdayService"
 import * as Log from "src/logging"
+import reportErrors from "src/discordResponses/reportError"
 
 /**
  * Scheduled job that checks for any users with birthdays today, and sends them
  * a message on the primary channel for the server.
  */
-export default function sendBirthdayMessages(
+function sendBirthdayMessages(
   discordClient: Discord.Client
 ): () => Promise<void> {
   return async () => {
@@ -47,3 +48,5 @@ export default function sendBirthdayMessages(
     })
   }
 }
+
+export default reportErrors("Send birthday messages", sendBirthdayMessages)

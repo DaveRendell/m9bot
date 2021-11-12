@@ -18,7 +18,7 @@ export default async function addSelfServiceRole(message: Discord.Message): Prom
       await repository.addSelfServiceRole({
         roleId, description, emoji
       })
-      await setupSelfServiceRoleMessage(message.client)
+      await setupSelfServiceRoleMessage(message.client)()
       message.reply("Done")
       return
     }

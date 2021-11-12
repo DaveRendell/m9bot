@@ -1,4 +1,6 @@
-import configFile = require("src/../config.json")
+import { readFileSync } from "fs"
+
+const configFile = readFileSync("config.json")
 
 interface Config {
   birthdayFile: string
@@ -7,11 +9,13 @@ interface Config {
   discord: {
     token: string,
     mainChannelId: string,
-    selfServiceMessageChannelId: string
+    selfServiceMessageChannelId: string,
+    errorLoggingChannelId: string,
+    errorLoggingUserId: string
   },
   cron: {
     sendBirthdayMessages: string
   }
 }
 
-export default configFile as unknown as Config
+export default JSON.parse(configFile.toString()) as Config
