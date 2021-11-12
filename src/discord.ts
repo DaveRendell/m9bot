@@ -1,7 +1,6 @@
 import * as Discord from "discord.js"
 import config from "./config"
 import setBirthday from "./discordResponses/setBirthday"
-import * as Log from "src/logging"
 import pinMessage from "./discordResponses/pinMessage"
 import unpinMessage from "./discordResponses/unpinMessage"
 import helpMessage from "./discordResponses/helpMessage"
@@ -10,12 +9,14 @@ import { getOrCreateSelfServiceRoleMessage } from "./services/selfServiceRoleSer
 import assignRole from "./discordResponses/assignRole"
 import removeRole from "./discordResponses/removeRole"
 import addSelfServiceRole from "./discordResponses/addSelfServiceRole"
+import * as logging from "./logging"
 
 /**
  * Sets up the discord client, including setting responses to messages and other
  * user interactions.
  */
 export default async function setupDiscord(): Promise<Discord.Client> {
+  logging.info("Creating Discord client...")
   const discordClient = new Discord.Client()
 
   discordClient.on("message", (message: Discord.Message) => {
@@ -43,7 +44,9 @@ export default async function setupDiscord(): Promise<Discord.Client> {
     }
   })
   
+  logging.info("Logging in to Discord...")
   await discordClient.login(config.discord.token)
+  logging.info("Done")
 
   const selfServiceMessage = await getOrCreateSelfServiceRoleMessage(discordClient)
   
@@ -69,6 +72,6 @@ export default async function setupDiscord(): Promise<Discord.Client> {
     }
   })
 
-  Log.info("Connected to Discord")
+  logging.info("Connected to Discord")
   return discordClient
 }
