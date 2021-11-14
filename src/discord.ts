@@ -32,14 +32,7 @@ export default async function setupDiscord(): Promise<Discord.Client> {
       addSelfServiceRole(message)
     }
 
-    const messageIsForAllUsers = message.content.includes("@here")
-        || message.content.includes("@everyone")
-
-    if (
-      discordClient.user
-      && message.mentions.has(discordClient.user)
-      && !messageIsForAllUsers
-    ) {
+    if (message.content.startsWith("m9bot help")) {
       helpMessage(message)
     }
   })
