@@ -20,5 +20,5 @@ export async function getBirthdays(): Promise<Birthday[]> {
 }
 
 export async function setBirthdays(birthdays: Birthday[]): Promise<void> {
-  fs.writeFile(config.birthdayFile, JSON.stringify(birthdays))
+  fs.writeFile(config.birthdayFile, JSON.stringify(birthdays, null, 2))
 }
