@@ -12,9 +12,15 @@ interface Config {
     selfServiceMessageChannelId: string,
     errorLoggingChannelId: string,
     errorLoggingUserId: string
-  },
+  }
+  checkSteps: {
+    users: { emailAddress: string, discordId: string }[]
+    goal: number,
+    stepsFile: string
+  }
   cron: {
-    sendBirthdayMessages: string
+    sendBirthdayMessages: string,
+    checkSteps: string
   }
 }
 

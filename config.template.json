@@ -9,7 +9,15 @@
     "errorLoggingChannelId": "Insert ID for the channel that errors during scheduled jobs should be posted",
     "errorLoggingUserId": "Insert ID for the user who should be tagged in messages containing errors during scheduled jobs"
   },
+  "checkSteps": {
+    "users": [
+      { "emailAddress": "", "discordId": "" }
+    ],
+    "goal": 7500,
+    "stepsFile": "./steps.json"
+  },
   "cron": {
-    "sendBirthdayMessages": "0 9 * * *"
+    "sendBirthdayMessages": "0 9 * * *",
+    "checkSteps": "0 21 * * *"
   }
 }
