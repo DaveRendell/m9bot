@@ -2,6 +2,7 @@ import * as Discord from "discord.js"
 import * as nodeCron from "node-cron"
 import config from "./config"
 import checkSteps from "./scheduledJobs/checkSteps"
+import logUsersInVoice from "./scheduledJobs/logUsersInVoice"
 import sendBirthdayMessages from "./scheduledJobs/sendBirthdayMessages"
 import setupSelfServiceRoleMessage from "./scheduledJobs/setupSelfServiceRoleMessage"
 
@@ -22,5 +23,10 @@ export default function setupScheduledJobs(
   nodeCron.schedule(
     config.cron.checkSteps,
     checkSteps(discordClient)
+  )
+
+  nodeCron.schedule(
+    config.cron.logUsersInVoice,
+    logUsersInVoice(discordClient)
   )
 }

@@ -16,8 +16,12 @@
     "goal": 7500,
     "stepsFile": "./steps.json"
   },
+  "voiceLog": {
+    "file": "./voice-log.csv"
+  },
   "cron": {
     "sendBirthdayMessages": "0 9 * * *",
-    "checkSteps": "0 21 * * *"
+    "checkSteps": "0 21 * * *",
+    "logUsersInVoice": "* * * * *"
   }
 }

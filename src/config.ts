@@ -18,9 +18,13 @@ interface Config {
     goal: number,
     stepsFile: string
   }
+  voiceLog: {
+    file: string
+  }
   cron: {
     sendBirthdayMessages: string,
     checkSteps: string
+    logUsersInVoice: string
   }
 }
 
