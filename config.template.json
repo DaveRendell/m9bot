@@ -1,4 +1,5 @@
 {
+  "serverNameList": "m9names.json",
   "birthdayFile": "birthdays.json",
   "selfServiceRoleFile": "selfServiceRoles.json",
   "selfServiceRoleMessageFile": "selfServiceRoleMessage.txt",

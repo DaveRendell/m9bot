@@ -3,6 +3,7 @@ import { readFileSync } from "fs"
 const configFile = readFileSync("config.json")
 
 interface Config {
+  serverNameList: string
   birthdayFile: string
   selfServiceRoleFile: string
   selfServiceRoleMessageFile: string
