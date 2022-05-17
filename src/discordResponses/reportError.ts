@@ -17,7 +17,7 @@ export default function reportErrors(jobName: string, scheduledJob: ScheduledJob
         logging.error("Error during scheduled job " + jobName, e as Error)
         const channel = await discordClient.channels.fetch(config.discord.errorLoggingChannelId) as Discord.TextChannel
         const userId = config.discord.errorLoggingUserId
-        channel.send(`<@${userId}>, I made an oops during scheduled job '${jobName}'.\n${e}`)
+        channel.send(`<#${userId}, I made an oops during scheduled job '${jobName}''.\n${e}`)
       }
     }
   }

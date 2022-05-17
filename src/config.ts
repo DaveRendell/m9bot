@@ -21,17 +21,11 @@ interface Config {
   }
   voiceLog: {
     file: string
-    sheetId: string
-  }
-  google: {
-    clientEmail: string
-    privateKey: string
   }
   cron: {
     sendBirthdayMessages: string,
     checkSteps: string
     logUsersInVoice: string
-    uploadVoiceLog: string
   }
 }
 
