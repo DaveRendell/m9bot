@@ -29,6 +29,8 @@ sure the bot has the 'Presence Intent' permission enabled.
 Next copy `config.template.json` to `config.json`, and paste your 
 bot's token into the JSON blob.
 
+Create a blank birthdays.json in root dir so that tests can write to it.
+
 Grab the channel ID for the channel you want the bot to post birthday messages
 to (Enable developer mode in Discord to easily access channel IDs), and add that
 to the config file as well.
