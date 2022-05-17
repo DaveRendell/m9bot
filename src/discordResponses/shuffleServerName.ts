@@ -16,5 +16,5 @@ export default async function shuffleServerName(
   const serverNames = JSON.parse(fileContents) as string[]
   const randomName = serverNames[Math.floor(Math.random()*serverNames.length)] || defaultName // randomiser copied verbatim from SO; unproven, auspicious
   const capitalised = "M" + randomName.substring(1)
-  await (message.guild as Discord.Guild).setName(`${capitalised}ESports`, `because ${message.member?.displayName || "someone"} said so`)
+  await (message.guild as Discord.Guild).setName(`${capitalised} eSports`, `because ${message.member?.displayName || "someone"} said so`)
 }
