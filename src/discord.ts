@@ -11,6 +11,7 @@ import removeRole from "./discordResponses/removeRole"
 import addSelfServiceRole from "./discordResponses/addSelfServiceRole"
 import * as logging from "./logging"
 import shuffleServerName from "./discordResponses/shuffleServerName"
+import streamMessage from "./discordResponses/streamMessage"
 
 /**
  * Sets up the discord client, including setting responses to messages and other
@@ -39,6 +40,10 @@ export default async function setupDiscord(): Promise<Discord.Client> {
 
     if (message.content.startsWith("m9bot shuffle!")) {
       shuffleServerName(message)
+    }
+
+    if (message.content.startsWith("m9bot stream")) {
+      streamMessage(message)
     }
   })
   
