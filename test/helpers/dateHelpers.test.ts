@@ -6,7 +6,7 @@ const oneMonthFromNow = new Date(2021, 7, 6)
 const manyYearsAgo = new Date(1989, 6, 3)
 
 beforeAll(() => {
-  jest.useFakeTimers('modern')
+  jest.useFakeTimers()
   jest.setSystemTime(today)
 })
 

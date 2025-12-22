@@ -1,14 +1,8 @@
 import * as Discord from "discord.js"
 import config from "./config"
 import setBirthday from "./discordResponses/setBirthday"
-import pinMessage from "./discordResponses/pinMessage"
-import unpinMessage from "./discordResponses/unpinMessage"
 import helpMessage from "./discordResponses/helpMessage"
 import listBirthdays from "./discordResponses/listBirthdays"
-import { getOrCreateSelfServiceRoleMessage } from "./services/selfServiceRoleService"
-import assignRole from "./discordResponses/assignRole"
-import removeRole from "./discordResponses/removeRole"
-import addSelfServiceRole from "./discordResponses/addSelfServiceRole"
 import * as logging from "./logging"
 import shuffleServerName from "./discordResponses/shuffleServerName"
 import streamMessage from "./discordResponses/streamMessage"
@@ -19,7 +13,14 @@ import streamMessage from "./discordResponses/streamMessage"
  */
 export default async function setupDiscord(): Promise<Discord.Client> {
   logging.info("Creating Discord client...")
-  const discordClient = new Discord.Client()
+  const discordClient = new Discord.Client({
+    intents: [
+      Discord.GatewayIntentBits.Guilds,
+		  Discord.GatewayIntentBits.GuildMessages,
+		  Discord.GatewayIntentBits.MessageContent,
+		  Discord.GatewayIntentBits.GuildMembers,
+    ]
+  })
 
   discordClient.on("message", (message: Discord.Message) => {
     if (message.content.startsWith("set birthday")) {
@@ -28,10 +29,6 @@ export default async function setupDiscord(): Promise<Discord.Client> {
 
     if (message.content === "list birthdays") {
       listBirthdays(message)
-    }
-
-    if (message.content.startsWith("add_self_service_role")) {
-      addSelfServiceRole(message)
     }
 
     if (message.content.startsWith("m9bot help")) {
@@ -50,30 +47,6 @@ export default async function setupDiscord(): Promise<Discord.Client> {
   logging.info("Logging in to Discord...")
   await discordClient.login(config.discord.token)
   logging.info("Done")
-
-  const selfServiceMessage = await getOrCreateSelfServiceRoleMessage(discordClient)
-  
-  discordClient.on("messageReactionAdd", async (reaction, user) => {
-    if (reaction.emoji.name === '📌') {
-      pinMessage(reaction.message)
-    } else if (reaction.message.id === selfServiceMessage.id && user.id !== discordClient.user?.id) {
-      const fullUser = await reaction.message.guild?.members.fetch(user.id)
-      if (fullUser) {
-        assignRole(reaction, fullUser)
-      }
-    }
-  })
-
-  discordClient.on("messageReactionRemove", async (reaction, user) => {
-    if (reaction.emoji.name === '📌') {
-      unpinMessage(reaction.message)
-    } else if (reaction.message.id === selfServiceMessage.id && user.id !== discordClient.user?.id) {
-      const fullUser = await reaction.message.guild?.members.fetch(user.id)
-      if (fullUser) {
-        removeRole(reaction, fullUser)
-      }
-    }
-  })
 
   logging.info("Connected to Discord")
   return discordClient

@@ -2,7 +2,6 @@ import * as Discord from "discord.js"
 import reportErrors from "src/discordResponses/reportError"
 import { mockChannel, mockClient } from "test/mocks/discord"
 import * as logging from "src/logging"
-import { mocked } from "ts-jest/utils"
 
 jest.mock("src/logging", () => ({
   info: jest.fn(),
@@ -36,14 +35,14 @@ function successfulScheduledJob(discordClient: Discord.Client) {
 
 beforeEach(() => {
   jest.resetAllMocks()
-  mocked(client.channels.fetch).mockResolvedValue(channel)
+  jest.mocked(client.channels.fetch).mockResolvedValue(channel)
 })
 
 describe("reportErrors", () => {
   it("runs the value of the original job if it completes successfully", async () => {
     await reportErrors("test job", successfulScheduledJob)(client)()
 
-    expect(mocked(logging.info)).toHaveBeenCalled()
+    expect(jest.mocked(logging.info)).toHaveBeenCalled()
   })
   it("supresses the error if the scheduled job fails", async () => {
     const promise = reportErrors("test job", failedScheduledJob)(client)()
@@ -53,7 +52,7 @@ describe("reportErrors", () => {
   it("logs the error if the scheduled job fails", async () => {
     await reportErrors("test job", failedScheduledJob)(client)()
 
-    expect(mocked(logging.error)).toHaveBeenCalledWith(
+    expect(jest.mocked(logging.error)).toHaveBeenCalledWith(
       "Error during scheduled job test job", error)
   })
   it("posts a message on Discord is there is an error", async () => {

@@ -8,5 +8,5 @@ export function info(message: string): void {
 
 export function error(message: string, error?: Error): void {
   console.error(`[${timestamp()}] ${message}`)
-  error && console.error(error)
+  if (error)  { console.error(error) }
 }

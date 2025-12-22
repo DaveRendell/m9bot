@@ -1,7 +1,6 @@
 import setBirthday from "src/discordResponses/setBirthday"
 import { getMockBirthdayService } from "test/mocks/services/mockBirthdayService"
 import { mockMessage, mockUser } from "test/mocks/discord"
-import { mocked } from "ts-jest/utils"
 
 jest.mock("src/services/birthdayService")
 
@@ -33,7 +32,7 @@ describe("setBirthday", () => {
     setBirthday(badDateMessage)
 
     expect(badDateMessage.reply).toHaveBeenCalledTimes(1)
-    expect(mocked(badDateMessage.reply).mock.calls[0][0]).toContain("Unable to parse date")
+    expect(jest.mocked(badDateMessage.reply).mock.calls[0][0]).toContain("Unable to parse date")
   })
   it("replies with a stack trace if there is an error while setting the users birthday", () => {
     mockedBirthdayService.addOrUpdateBirthday.mockImplementation(() => {
@@ -43,7 +42,7 @@ describe("setBirthday", () => {
     setBirthday(goodMessage)
 
     expect(goodMessage.reply).toHaveBeenCalledTimes(1)
-    expect(mocked(goodMessage.reply).mock.calls[0][0]).toContain("Error adding birthday")
+    expect(jest.mocked(goodMessage.reply).mock.calls[0][0]).toContain("Error adding birthday")
   })
   it("replies with a confirmation message when the user's birthday is set successfully", () => {
     mockedBirthdayService.addOrUpdateBirthday.mockResolvedValue(undefined)
@@ -51,6 +50,6 @@ describe("setBirthday", () => {
     setBirthday(goodMessage)
 
     expect(goodMessage.reply).toHaveBeenCalledTimes(1)
-    expect(mocked(goodMessage.reply).mock.calls[0][0]).toContain("Added birthday")
+    expect(jest.mocked(goodMessage.reply).mock.calls[0][0]).toContain("Added birthday")
   })
 })

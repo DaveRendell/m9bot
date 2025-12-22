@@ -16,7 +16,7 @@ function logUsersInVoice(
 
 async function logGuildUsersInVoice(guild: Discord.Guild): Promise<void> {
   const timeStamp = new Date().toISOString()
-  const voiceChannels = guild.channels.cache.filter(c => c.type === "voice") as Discord.Collection<string, Discord.VoiceChannel>
+  const voiceChannels = guild.channels.cache.filter(c => c.type === Discord.ChannelType.GuildVoice) as Discord.Collection<string, Discord.VoiceChannel>
 
   const rowEntries = voiceChannels.map(channel =>
     channel.members.size ? `${timeStamp},${channel.id},${channel.members.size}\n` : ''

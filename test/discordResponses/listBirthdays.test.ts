@@ -1,6 +1,5 @@
 import * as Discord from "discord.js"
 import listBirthdays from "src/discordResponses/listBirthdays"
-import { mocked } from "ts-jest/utils"
 import Birthday from "src/models/birthday"
 import { getMockBirthdayService } from "test/mocks/services/mockBirthdayService"
 import { mockMessage, mockUser } from "test/mocks/discord"
@@ -13,7 +12,7 @@ const mockUser2 = mockUser({ nickname: "user2" })
 const mockUserWithoutNickname = mockUser({ displayName: "noNickNameUser" })
 
 const message = mockMessage()
-const getMessageChannelMembers = mocked(
+const getMessageChannelMembers = jest.mocked(
   (message.channel as Discord.TextChannel).members.get)
 
 const birthday1: Birthday = { userId: "user1", date: "2001-02-03"}
@@ -41,15 +40,15 @@ describe("listBirthdays", () => {
   it("says there are no birthdays if none are present", async () => {
     await listBirthdays(message)
 
-    expect(mocked(message.reply).mock.calls[0][0]).toContain("No birthdays")
+    expect(jest.mocked(message.reply).mock.calls[0][0]).toContain("No birthdays")
   })
   it("lists birthdays if some are returned", async () => {
     setReturnedBirthdays([birthday1, birthday2])
 
     await listBirthdays(message)
 
-    expect(mocked(message.reply).mock.calls[0][0]).toContain("user1")
-    expect(mocked(message.reply).mock.calls[0][0]).toContain("user2")
+    expect(jest.mocked(message.reply).mock.calls[0][0]).toContain("user1")
+    expect(jest.mocked(message.reply).mock.calls[0][0]).toContain("user2")
   })
   it("falls back to display name for users with no nickname", async () => {
     getMessageChannelMembers.mockReturnValue(mockUserWithoutNickname)
@@ -57,7 +56,7 @@ describe("listBirthdays", () => {
 
     await listBirthdays(message)
 
-    expect(mocked(message.reply).mock.calls[0][0]).toContain(
+    expect(jest.mocked(message.reply).mock.calls[0][0]).toContain(
       mockUserWithoutNickname.displayName)
   })
 })

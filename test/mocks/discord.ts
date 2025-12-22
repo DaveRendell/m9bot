@@ -1,6 +1,6 @@
 import * as Discord from "discord.js"
 
-type PartialWithoutValueOf<Type> = Omit<Partial<Type>, "valueOf">
+type PartialWithoutValueOfToString<Type> = Omit<Omit<Partial<Type>, "valueOf">, "toString">
 
 export function mockClient(): Discord.Client {
   return {
@@ -14,7 +14,7 @@ export function mockClient(): Discord.Client {
 }
 
 export function mockUser(
-  overrides: PartialWithoutValueOf<Discord.GuildMember> = {}
+  overrides: PartialWithoutValueOfToString<Discord.GuildMember> = {}
 ): Discord.GuildMember {
   return {
     roles: {
@@ -30,7 +30,7 @@ export function mockUser(
 }
 
 export function mockChannel(
-  overrides: PartialWithoutValueOf<Discord.Channel> = {}
+  overrides: PartialWithoutValueOfToString<Discord.Channel> = {}
 ): Discord.Channel {
   return {
     isText: jest.fn(),
@@ -46,7 +46,7 @@ export function mockChannel(
   } as unknown as Discord.Channel
 }
 
-export function mockGuild(overrides: PartialWithoutValueOf<Discord.Guild> = {}): Discord.Guild {
+export function mockGuild(overrides: PartialWithoutValueOfToString<Discord.Guild> = {}): Discord.Guild {
   return {
     members: {
       cache: {
@@ -56,11 +56,12 @@ export function mockGuild(overrides: PartialWithoutValueOf<Discord.Guild> = {}):
     roles: {
       fetch: jest.fn()
     },
+    setName: jest.fn(),
     ...overrides
   } as unknown as  Discord.Guild
 }
 
-export function mockRole(overrides: PartialWithoutValueOf<Discord.Role> = {}): Discord.Role {
+export function mockRole(overrides: PartialWithoutValueOfToString<Discord.Role> = {}): Discord.Role {
   return {
     id: 1234,
     ...overrides
@@ -77,7 +78,7 @@ export function mockMessageReaction(emoji: string = "🍎"): Discord.MessageReac
 }
 
 export function mockMessage(
-  overrides: PartialWithoutValueOf<Discord.Message> = {}
+  overrides: PartialWithoutValueOfToString<Discord.Message> = {}
 ): Discord.Message {
   return {
     pin: jest.fn(),
