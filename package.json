@@ -10,7 +10,8 @@
     "lint": "eslint src/ --ext .ts",
     "build": "npm run lint && tsc",
     "start": "NODE_PATH=dist node dist/src/main.js",
-    "deploy": "./deploy.sh"
+    "deploy": "./deploy.sh",
+    "registerCommands": "ts-node src/registerCommands.ts"
   },
   "repository": {
     "type": "git",

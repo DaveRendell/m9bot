@@ -8,7 +8,9 @@
     "mainChannelId": "Insert ID for the main channel on the server here",
     "selfServiceMessageChannelId": "Insert ID for the self service role message to be posted in",
     "errorLoggingChannelId": "Insert ID for the channel that errors during scheduled jobs should be posted",
-    "errorLoggingUserId": "Insert ID for the user who should be tagged in messages containing errors during scheduled jobs"
+    "errorLoggingUserId": "Insert ID for the user who should be tagged in messages containing errors during scheduled jobs",
+    "clientId": "Insert the application ID from the developer portal",
+    "guildId": "Insert the ID of the server"
   },
   "checkSteps": {
     "users": [

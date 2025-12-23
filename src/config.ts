@@ -12,7 +12,9 @@ interface Config {
     mainChannelId: string,
     selfServiceMessageChannelId: string,
     errorLoggingChannelId: string,
-    errorLoggingUserId: string
+    errorLoggingUserId: string,
+    clientId: string,
+    guildId: string,
   }
   checkSteps: {
     users: { emailAddress: string, discordId: string }[]

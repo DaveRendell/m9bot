@@ -1,6 +1,12 @@
 # 🇲9️⃣🤖
 Bot for the M9 Discord server
 
+## V2 TODO
+[x] Upgrade discord.js
+[ ] Switch to using slash commands
+[ ] Tidy up unused code / config
+[ ] Add reminders
+
 ## Usage
 - Set your birthday to get birthday notifications: post a message on Discord
   with the format `set birthday YYYY-MM-DD`. The bot will reply if your message
