@@ -1,6 +1,6 @@
-import { RepliableInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SharedSlashCommand } from "discord.js";
 
 export default interface M9BotCommand {
-    data: SlashCommandBuilder,
-    execute(interaction: RepliableInteraction): Promise<void>
+    data: SharedSlashCommand,
+    execute(interaction: ChatInputCommandInteraction): Promise<void>
 }

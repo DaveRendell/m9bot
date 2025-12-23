@@ -94,3 +94,19 @@ export function mockMessage(
     ...overrides
   } as unknown as Discord.Message
 }
+
+export function mockInteraction(
+  options: Record<string, string>,
+  overrides: PartialWithoutValueOfToString<Discord.ChatInputCommandInteraction> = {},
+): Discord.ChatInputCommandInteraction {
+  return {
+    reply: jest.fn(),
+    user: {
+      id: "user1"
+    },
+    options: {
+      getString(key: string) { return options[key] }
+    },
+    ...overrides,
+  } as unknown as Discord.ChatInputCommandInteraction
+}
