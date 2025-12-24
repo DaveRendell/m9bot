@@ -1,8 +1,6 @@
 import * as Discord from "discord.js"
 import config from "./config"
-import listBirthdays from "./discordResponses/listBirthdays"
 import * as logging from "./logging"
-import shuffleServerName from "./discordResponses/shuffleServerName"
 import { COMMANDS } from "./discordCommands/commands"
 /**
  * Sets up the discord client, including setting responses to messages and other
@@ -17,16 +15,6 @@ export default async function setupDiscord(): Promise<Discord.Client> {
 		  Discord.GatewayIntentBits.MessageContent,
 		  Discord.GatewayIntentBits.GuildMembers,
     ]
-  })
-
-  discordClient.on(Discord.Events.MessageCreate, (message: Discord.Message) => {
-    if (message.content === "list birthdays") {
-      listBirthdays(message)
-    }
-
-    if (message.content.startsWith("m9bot shuffle!")) {
-      shuffleServerName(message)
-    }
   })
 
   discordClient.on(Discord.Events.InteractionCreate, async (interaction) => {

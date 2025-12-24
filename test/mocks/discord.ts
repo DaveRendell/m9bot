@@ -104,6 +104,12 @@ export function mockInteraction(
     user: {
       id: "user1"
     },
+    member: {
+      id: "user1",
+      displayName: "user1",
+    },
+    channel: mockChannel(),
+    guild: mockGuild(),
     options: {
       getString(key: string) { return options[key] }
     },
