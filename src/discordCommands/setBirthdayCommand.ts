@@ -12,7 +12,7 @@ const setBirthdayCommand: M9BotCommand = {
             .setRequired(true)),
     async execute(interaction) {
         const userId = interaction.user.id
-        const dateString = interaction.options.getString("birthdate")!!
+        const dateString = interaction.options.getString("birthdate")!
         const dateTimestamp = Date.parse(dateString)
 
         if (isNaN(dateTimestamp)) {
