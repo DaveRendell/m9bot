@@ -51,7 +51,8 @@ export function mockGuild(overrides: PartialWithoutValueOfToString<Discord.Guild
     members: {
       cache: {
         get: jest.fn()
-      }
+      },
+      fetch: jest.fn()
     },
     roles: {
       fetch: jest.fn()

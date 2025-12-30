@@ -9,7 +9,7 @@ const listBirthdaysCommand: M9BotCommand = {
         .setDescription("List upcoming birthdays"),
     async execute(interaction) {
         const upcomingBirthdays = await getUpcomingBirthdays()
-        
+
         if (upcomingBirthdays.length == 0) {
             interaction.reply(
                 { 
@@ -18,7 +18,8 @@ const listBirthdaysCommand: M9BotCommand = {
                 })
             return
         }
-
+        await (interaction.guild as Discord.Guild).members.fetch()
+        
         const userDatePairs = upcomingBirthdays.map(({ userId, date }) => {
             const channel = interaction.channel as Discord.TextChannel
             const user = channel.members.get(userId)

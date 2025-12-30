@@ -3,7 +3,7 @@ Bot for the M9 Discord server
 
 ## V2 TODO
 [x] Upgrade discord.js
-[ ] Switch to using slash commands
+[x] Switch to using slash commands
 [ ] Tidy up unused code / config
 [ ] Add reminders
 
@@ -61,7 +61,7 @@ After=network.target
 [Service]
 Environment="NODE_ENV=production"
 Environment="NODE_PATH=/home/pi/m9bot/dist"
-ExecStart=/home/pi/.nvm/versions/node/v15.11.0/bin/node /home/pi/m9bot/dist/src/main.js
+ExecStart=/home/pi/.nvm/versions/node/v25.2.1/bin/node /home/pi/m9bot/dist/src/main.js
 WorkingDirectory=/home/pi/m9bot    
 StandardOutput=inherit
 StandardError=inherit

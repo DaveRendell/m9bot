@@ -12,7 +12,6 @@ const shuffleCommand: M9BotCommand = {
         .setDescription("Pick a new m9 server name"),
     async execute(interaction) {
           const fileContents = await fs.readFile(config.serverNameList, "utf8")
-          console.log(fileContents)
           const serverNames = JSON.parse(fileContents) as string[]
           const randomName = serverNames[Math.floor(Math.random()*serverNames.length)] || defaultName // randomiser copied verbatim from SO; unproven, auspicious
           const capitalised = "M" + randomName.substring(1)
